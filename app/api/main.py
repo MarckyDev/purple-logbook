@@ -2,8 +2,18 @@ from emailReader import fetch_email
 from emailPatterns import EmailPatterns
 import re
 
-latest_email = fetch_email()
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
+app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 def analyze_email(email_content):
     if not email_content:
@@ -41,7 +51,14 @@ def analyze_email(email_content):
 
     return "The email is classified as LEGITIMATE."
 
-if __name__ == "__main__":
+
+
+
+@app.get("/analyze")
+async def analyze():
+    # Fetch the latest email
+    latest_email = fetch_email()
     result = analyze_email(latest_email)
-    print("Loading...")
+    #print("Loading...")
     print(result)
+    return {"analysis": result}

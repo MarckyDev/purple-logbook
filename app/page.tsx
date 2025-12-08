@@ -23,21 +23,19 @@ async function get_email_analysis(){
 export default async function Home() {
   const email_analysis = await get_email_analysis();
   return (
-    <div className="flex min-h-screen bg-indigo-50 font-sans">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col  justify-center mx-auto px-4">
-        <h2 className="text-4xl font-bold text-purple-900 sm:text-5xl text-center">
-          Welcome to Purple API Playground
-        </h2>
-        
-        <p className="mt-4 text-purple-600 sm:text-lg text-center">
-          Try emailing this email to see the analysis:<br/>
-          <strong>example@email.com</strong>
-        </p>
-        <div className="mt-8">
-          <Card title="Current Email" content={email_analysis ? email_analysis : "Obtaining Latest Email..."}/>
-        </div>
-
-
+    <div className="flex min-h-screenfont-sans flex-col ">
+      <nav>
+        <header className=" col-span-1 border-red-50 border-2 p-4">
+          <h1 className="text-5xl font-bold text-purple-600 text-left">
+            Hello Marc!
+          </h1>
+        </header>
+      </nav>
+      <main className="grid grid-cols-2 grid-rows-2 min-h-screen w-full max-w-3xl mx-auto px-4 gap-4 mt-8">
+      <div className="border-2 border-red-500 h-auto w-auto"> hello world</div>
+      <div className="border-2 border-red-500 h-auto w-auto"> hello world</div>
+      <div className="border-2 border-red-500 h-auto w-auto"> hello world</div>
+      <div className="border-2 border-red-500 h-auto w-auto"> hello world</div>
         
       </main>
     </div>

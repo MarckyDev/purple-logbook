@@ -28,15 +28,13 @@ export default async function Home() {
         <h2 className="text-4xl font-bold text-purple-900 sm:text-5xl text-center">
           Welcome to Purple API Playground
         </h2>
+        
         <p className="mt-4 text-purple-600 sm:text-lg text-center">
-          My personal api playground for testing and documenting APIs.
-        </p>
-        <p>
           Try emailing this email to see the analysis:<br/>
           <strong>example@email.com</strong>
         </p>
         <div className="mt-8">
-          <Card title="Emails" content={email_analysis}/>
+          <Card title="Current Email" content={email_analysis ? email_analysis : "Obtaining Latest Email..."}/>
         </div>
 
 

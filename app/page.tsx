@@ -31,11 +31,15 @@ export default async function Home() {
         <p className="mt-4 text-purple-600 sm:text-lg text-center">
           My personal api playground for testing and documenting APIs.
         </p>
+        <p>
+          Try emailing this email to see the analysis:<br/>
+          <strong>example@email.com</strong>
+        </p>
         <div className="mt-8">
           <Card title="Emails" content={email_analysis}/>
         </div>
 
-        
+
         
       </main>
     </div>

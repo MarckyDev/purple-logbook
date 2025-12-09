@@ -5,6 +5,6 @@ export async function GET() {
     
     return Response.json(data);
   } catch (error) {
-    return Response.json({ error: 'Failed to analyze email' }, { status: 500 });
+    return Response.json({ error: 'Failed to analyze email. ' + error }, { status: 500 });
   }
 }

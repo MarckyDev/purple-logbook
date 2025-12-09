@@ -4,6 +4,6 @@ export async function GET() {
     const data = await response.json();
     return Response.json(data);
     } catch (error) {
-        return Response.json({ error: 'Failed to fetch verse of the day' }, { status: 500 });
+        return Response.json({ error: 'Failed to fetch verse of the day. ' + error }, { status: 500 });
     }
 }

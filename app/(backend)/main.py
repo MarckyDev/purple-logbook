@@ -1,4 +1,5 @@
 from libs.email_libs.email_analyzer import analyze as analyze_email
+from libs.bible_libs.bible_api_request import get_random_verse
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -12,6 +13,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
+@app.get("/verse_of_the_day")
+async def get_votd():
+    return get_random_verse()
 
 @app.get("/analyze")
 async def analyze():

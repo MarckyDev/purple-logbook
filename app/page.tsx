@@ -1,7 +1,3 @@
-import Card from "@/components/Card";
-import { use } from "react";
-
-
 async function get_email_analysis(){
     try {
     const response = await fetch('http://localhost:3000/api/email-reader', {

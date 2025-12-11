@@ -79,7 +79,9 @@ async function get_weather_japan(){
 export default async function Home() {
   const email_analysis = await get_email_analysis();
   const verse_of_the_day = await get_verse_of_the_day();
-  //console.log(verse_of_the_day);
+  console.log("================ VOTD ================");
+  console.log(verse_of_the_day);
+  console.log("===============================================");
   const bored_activity = await get_bored_activity();
   // console.log("================ Bored Activity ================");
   // console.log(bored_activity);
@@ -137,10 +139,10 @@ export default async function Home() {
       <div className="row-span-2 border-2 border-red-500 h-72 w-auto">
           Verse of the Day
           <div className="border-blue-500 border-2 p-4 m-2">
-            {verse_of_the_day.verse.details.reference} ({verse_of_the_day.verse.details.version})
-            <p className="mt-2 italic">{verse_of_the_day.verse.details.text}</p>
+            {verse_of_the_day.reference} ({verse_of_the_day.version})
+            <p className="mt-2 italic">{verse_of_the_day.text}</p>
             <br/>
-            <p className="mt-2 italic">{verse_of_the_day.verse.notice}</p>
+            <p className="mt-2 italic">{verse_of_the_day.notice}</p>
           </div>
       </div>
 

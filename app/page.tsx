@@ -1,6 +1,6 @@
 async function get_email_analysis(){
     try {
-    const response = await fetch('http://localhost:3000/api/email-reader', {
+    const response = await fetch(process.env.API_URL_EMAIL_READER as string, {
       cache: 'no-store' // Ensures fresh data on each request
     });
     
@@ -19,8 +19,7 @@ async function get_email_analysis(){
 
 async function get_verse_of_the_day(){
     try {
-    const response = await fetch('http://localhost:3000/api/verse-of-the-day', {
-      //cache: 'force-cache' // Cache the response for better performance
+    const response = await fetch(process.env.API_URL_VOTD as string, {
       cache: 'no-store' // Ensures fresh data on each request
     });
     
@@ -39,7 +38,7 @@ async function get_verse_of_the_day(){
 
 async function get_bored_activity(){
     try {
-    const response = await fetch('http://localhost:3000/api/bored', {
+    const response = await fetch(process.env.API_URL_BORED as string, {
       //cache: 'force-cache' // Cache the response for better performance
       cache: 'no-store' // Ensures fresh data on each request
     });
@@ -62,9 +61,9 @@ export default async function Home() {
   const verse_of_the_day = await get_verse_of_the_day();
   //console.log(verse_of_the_day);
   const bored_activity = await get_bored_activity();
-  console.log("================ Bored Activity ================");
-  console.log(bored_activity);
-  console.log("===============================================");
+  // console.log("================ Bored Activity ================");
+  // console.log(bored_activity);
+  // console.log("===============================================");
   return (
     <div className="flex min-h-screenfont-sans flex-col overflow-clip">
       <nav>
@@ -77,7 +76,7 @@ export default async function Home() {
       <main className="grid grid-flow-dense grid-cols-2 grid-rows-6 min-h-screen w-full mx-auto px-4 gap-4 mt-4">
 
       <div className="row-span-3 border-2 border-red-500 h-full w-auto">
-          Weather 
+          Weather Today in the Philippines
           <div className="border-blue-500 border-2">
             tryret
           </div>

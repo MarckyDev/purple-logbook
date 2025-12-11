@@ -60,7 +60,6 @@ async function get_bored_activity(){
 async function get_weather_japan(){
   try {
     const response = await fetch(process.env.API_URL_WEATHER as string, {
-      //cache: 'force-cache' // Cache the response for better performance
       cache: 'no-store' // Ensures fresh data on each request
     });
     
@@ -80,19 +79,8 @@ async function get_weather_japan(){
 export default async function Home() {
   const email_analysis = await get_email_analysis();
   const verse_of_the_day = await get_verse_of_the_day();
-  console.log("================ VOTD ================");
-  console.log(verse_of_the_day);
-  console.log("===============================================");
   const bored_activity = await get_bored_activity();
-  // console.log("================ Bored Activity ================");
-  // console.log(bored_activity);
-  // console.log("===============================================");
-
   const weather_japan = await get_weather_japan();
-  console.log("================ Weather Japan ================");
-  console.log(weather_japan);
-  console.log("===============================================");
-
   return (
     <div className="min-h-screen font-sans">
       <nav className="sticky top-0 z-50 backdrop-blur-md bg-white/50 dark:bg-gray-900/50 border-b border-purple-200/30">
@@ -116,7 +104,7 @@ export default async function Home() {
       <main className="max-w-7xl mx-auto px-6 py-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-auto">
 
-          <BentoCard title="🌤️ Weather Today in Japan" className="md:col-span-1 lg:col-span-2">
+          <BentoCard title="Weather Today in Japan" className="md:col-span-1 lg:col-span-2">
             <div className="space-y-3">
               <div className="text-4xl font-bold text-purple-700 dark:text-purple-300">
                 {weather_japan.weather_main}
@@ -137,7 +125,7 @@ export default async function Home() {
             </div>
           </BentoCard>
 
-          <BentoCard title="🎯 Bored?" className="md:col-span-1">
+          <BentoCard title="Bored?" className="md:col-span-1">
             <div className="space-y-3">
               <p className="text-sm text-gray-600 dark:text-gray-400">Try this activity:</p>
               <div className="p-4 bg-linear-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-xl border border-purple-200/50">
@@ -154,13 +142,13 @@ export default async function Home() {
             </div>
           </BentoCard>
 
-          <BentoCard title="📧 Latest Email Status" className="md:col-span-1">
+          <BentoCard title="Latest Email Status" className="md:col-span-1">
             <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-200/50">
               <p className="text-sm leading-relaxed">{email_analysis}</p>
             </div>
           </BentoCard>
 
-          <BentoCard title="📖 Verse of the Day" className="md:col-span-1 lg:col-span-2">
+          <BentoCard title="Verse of the Day" className="md:col-span-1 lg:col-span-2">
             <div className="space-y-3">
               <div className="flex items-center gap-2 text-sm font-semibold text-purple-700 dark:text-purple-300">
                 <span>{verse_of_the_day.reference}</span>

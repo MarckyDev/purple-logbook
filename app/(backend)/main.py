@@ -1,7 +1,7 @@
 from libs.email_libs.email_analyzer import analyze as analyze_email
 from libs.bible_libs.bible_api_request import get_random_verse
 from libs.bored_libs.bored import get_bored_activity
-
+from libs.weather_libs.weather import get_weather
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -15,6 +15,10 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@app.get("/weather_today")
+async def get_weather_today():
+    return get_weather()
 
 @app.get("/bored_activity")
 async def get_bored():

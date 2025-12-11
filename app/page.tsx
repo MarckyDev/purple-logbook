@@ -56,6 +56,26 @@ async function get_bored_activity(){
     }
 }
 
+async function get_weather_japan(){
+  try {
+    const response = await fetch(process.env.API_URL_WEATHER as string, {
+      //cache: 'force-cache' // Cache the response for better performance
+      cache: 'no-store' // Ensures fresh data on each request
+    });
+    
+    if (!response.ok) {
+      throw new Error('Failed to fetch');
+    }
+    
+    const data = await response.json();
+    console.log(data);
+    return data || 'No weather data available';
+    } catch (error) {
+      console.error('Error fetching weather data:', error);
+      return 'Error loading weather data';
+    }
+}
+
 export default async function Home() {
   const email_analysis = await get_email_analysis();
   const verse_of_the_day = await get_verse_of_the_day();
@@ -64,6 +84,12 @@ export default async function Home() {
   // console.log("================ Bored Activity ================");
   // console.log(bored_activity);
   // console.log("===============================================");
+
+  const weather_japan = await get_weather_japan();
+  console.log("================ Weather Japan ================");
+  console.log(weather_japan);
+  console.log("===============================================");
+
   return (
     <div className="flex min-h-screenfont-sans flex-col overflow-clip">
       <nav>
@@ -76,9 +102,17 @@ export default async function Home() {
       <main className="grid grid-flow-dense grid-cols-2 grid-rows-6 min-h-screen w-full mx-auto px-4 gap-4 mt-4">
 
       <div className="row-span-3 border-2 border-red-500 h-full w-auto">
-          Weather Today in the Philippines
+          Weather Today in Japan
           <div className="border-blue-500 border-2">
-            tryret
+            Weather: {weather_japan.weather_main}
+            <br/>
+
+            Temperature: {weather_japan.temp_min_celsius} °C - {weather_japan.temp_max_celsius} °C
+            <br/>
+            Humidity: {weather_japan.humidity} %
+            <br/>
+            Condition: {weather_japan.condition}
+
           </div>
       </div>
 

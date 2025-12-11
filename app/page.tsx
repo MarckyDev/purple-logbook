@@ -123,7 +123,7 @@ export default async function Home() {
           <br/>
           Try this activity:
           <div className="border-blue-500 border-2 p-4 m-2">
-            {bored_activity.activity} (Type: {(bored_activity.type).charAt(0).toUpperCase() + bored_activity.type.slice(1)})
+            {bored_activity.activity} (Type: { bored_activity.type != null ? (bored_activity.type).charAt(0).toUpperCase() + bored_activity.type.slice(1): 'N/A' })
             <br/>
             Price: {bored_activity.price == 0 ? 'Free' : bored_activity.price}
           </div>
@@ -139,10 +139,10 @@ export default async function Home() {
       <div className="row-span-2 border-2 border-red-500 h-72 w-auto">
           Verse of the Day
           <div className="border-blue-500 border-2 p-4 m-2">
-            {verse_of_the_day.reference} ({verse_of_the_day.version})
-            <p className="mt-2 italic">{verse_of_the_day.text}</p>
+            {verse_of_the_day.verse.details.reference} ({verse_of_the_day.verse.details.version})
+            <p className="mt-2 italic">{verse_of_the_day.verse.details.text}</p>
             <br/>
-            <p className="mt-2 italic">{verse_of_the_day.notice}</p>
+            <p className="mt-2 italic">{verse_of_the_day.verse.notice}</p>
           </div>
       </div>
 

@@ -41,8 +41,7 @@ async function get_verse_of_the_day(){
 async function get_bored_activity(){
     try {
     const response = await fetch(process.env.API_URL_BORED as string, {
-      //cache: 'force-cache' // Cache the response for better performance
-      cache: 'no-store' // Ensures fresh data on each request
+      next: { revalidate: 300 } // Cache for 5 minutes
     });
     
     if (!response.ok) {
@@ -164,16 +163,16 @@ export default async function Home() {
           <BentoCard title="📖 Verse of the Day" className="md:col-span-1 lg:col-span-2">
             <div className="space-y-3">
               <div className="flex items-center gap-2 text-sm font-semibold text-purple-700 dark:text-purple-300">
-                <span>{verse_of_the_day.verse.details.reference}</span>
+                <span>{verse_of_the_day.reference}</span>
                 <span className="px-2 py-0.5 bg-purple-100 dark:bg-purple-800 rounded text-xs">
-                  {verse_of_the_day.verse.details.version}
+                  {verse_of_the_day.version}
                 </span>
               </div>
               <blockquote className="text-lg italic leading-relaxed border-l-4 border-purple-400 pl-4 py-2">
-                &ldquo;{verse_of_the_day.verse.details.text}&rdquo;
+                &ldquo;{verse_of_the_day.verse}&rdquo;
               </blockquote>
               <p className="text-xs text-gray-500 dark:text-gray-400 mt-3">
-                {verse_of_the_day.verse.notice}
+                {verse_of_the_day.notice}
               </p>
             </div>
           </BentoCard>

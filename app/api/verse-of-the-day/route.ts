@@ -1,6 +1,6 @@
 export async function GET() {
     try {
-    const response = await fetch('https://beta.ourmanna.com/api/v1/get/?format=json');
+    const response = await fetch(process.env.API_URL_VOTD as string);
     const data = await response.json();
     return Response.json(data);
     } catch (error) {

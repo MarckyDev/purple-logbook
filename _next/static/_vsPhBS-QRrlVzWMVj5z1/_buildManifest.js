@@ -1,7 +1,12 @@
 self.__BUILD_MANIFEST = {
   "__rewrites": {
     "afterFiles": [],
-    "beforeFiles": [],
+    "beforeFiles": [
+      {
+        "source": "/purple-logbook//_next/:path+",
+        "destination": "/purple-logbook/_next/:path+"
+      }
+    ],
     "fallback": []
   },
   "sortedPages": [

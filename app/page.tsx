@@ -1,86 +1,51 @@
-import BentoCard from '@/components/BentoCard';
+'use client';
 
-async function get_email_analysis(){
-    try {
-    const response = await fetch(process.env.NEXT_PUBLIC_API_URL_EMAIL_READER as string, {
-      next: {revalidate: 60}
-    });
-    
-    if (!response.ok) {
-      throw new Error('Failed to fetch');
-    }
-    
-    const data = await response.json();
-    console.log(data);
+import BentoCard from '@/components/BentoCard';
+import { use } from 'react';
+
+const fetchEmailAnalysis = async () => {
+  try {
+    const res = await fetch(process.env.NEXT_PUBLIC_API_URL_EMAIL_READER as string);
+    const data = await res.json();
     return data.analysis || 'No analysis available';
-  } catch (error) {
-    console.error('Error fetching email analysis:', error);
+  } catch {
     return 'Error loading email analysis';
   }
-}
+};
 
-async function get_verse_of_the_day(){
-    try {
-    const response = await fetch(process.env.NEXT_PUBLIC_API_URL_VOTD as string, {
-      next: {revalidate: 60} // Ensures fresh data on each request
-    });
-    
-    if (!response.ok) {
-      throw new Error('Failed to fetch');
-    }
-    
-    const data = await response.json();
-    console.log(data);
-    return data || 'No verse available';
-    } catch (error) {
-      console.error('Error fetching verse of the day:', error);
-      return 'Error loading verse of the day';
-    }
-}
-
-async function get_bored_activity(){
-    try {
-    const response = await fetch(process.env.NEXT_PUBLIC_API_URL_BORED as string, {
-      next: { revalidate: 300 } // Cache for 5 minutes
-    });
-    
-    if (!response.ok) {
-      throw new Error('Failed to fetch');
-    }
-    
-    const data = await response.json();
-    console.log(data);
-    return data || 'No activity available';
-    } catch (error) {
-      console.error('Error fetching bored activity:', error);
-      return 'Error loading bored activity';
-    }
-}
-
-async function get_weather_japan(){
+const fetchVerseOfTheDay = async () => {
   try {
-    const response = await fetch(process.env.NEXT_PUBLIC_API_URL_WEATHER as string, {
-      next: {revalidate: 60} // Ensures fresh data on each request
-    });
-    
-    if (!response.ok) {
-      throw new Error('Failed to fetch');
-    }
-    
-    const data = await response.json();
-    console.log(data);
-    return data || 'No weather data available';
-    } catch (error) {
-      console.error('Error fetching weather data:', error);
-      return 'Error loading weather data';
-    }
-}
+    const res = await fetch(process.env.NEXT_PUBLIC_API_URL_VOTD as string);
+    return await res.json();
+  } catch {
+    return { verse: 'Error loading verse', reference: '', version: '', notice: '' };
+  }
+};
 
-export default async function Home() {
-  const email_analysis = await get_email_analysis();
-  const verse_of_the_day = await get_verse_of_the_day();
-  const bored_activity = await get_bored_activity();
-  const weather_japan = await get_weather_japan();
+const fetchBoredActivity = async () => {
+  try {
+    const res = await fetch(process.env.NEXT_PUBLIC_API_URL_BORED as string);
+    return await res.json();
+  } catch {
+    return { activity: 'Error loading activity', type: null, price: 0 };
+  }
+};
+
+const fetchWeather = async () => {
+  try {
+    const res = await fetch(process.env.NEXT_PUBLIC_API_URL_WEATHER as string);
+    return await res.json();
+  } catch {
+    return { weather_main: 'Error', temp_min_celsius: '', temp_max_celsius: '', humidity: '', condition: 'Error loading weather' };
+  }
+};
+
+export default function Home() {
+  const emailAnalysis = use(fetchEmailAnalysis());
+  const verseOfTheDay = use(fetchVerseOfTheDay());
+  const boredActivity = use(fetchBoredActivity());
+  const weatherJapan = use(fetchWeather());
+
   return (
     <div className="min-h-screen font-sans">
       <nav className="sticky top-0 z-50 backdrop-blur-md bg-white/50 dark:bg-gray-900/50 border-b border-purple-200/30">
@@ -107,20 +72,20 @@ export default async function Home() {
           <BentoCard title="Weather Today in Japan" className="md:col-span-1 lg:col-span-2">
             <div className="space-y-3">
               <div className="text-4xl font-bold text-purple-700 dark:text-purple-300">
-                {weather_japan.weather_main}
+                {weatherJapan.weather_main}
               </div>
               <div className="grid grid-cols-2 gap-4 mt-4">
                 <div className="space-y-1">
                   <p className="text-sm text-gray-600 dark:text-gray-400">Temperature</p>
-                  <p className="text-xl font-semibold">{weather_japan.temp_min_celsius}° - {weather_japan.temp_max_celsius}°C</p>
+                  <p className="text-xl font-semibold">{weatherJapan.temp_min_celsius}° - {weatherJapan.temp_max_celsius}°C</p>
                 </div>
                 <div className="space-y-1">
                   <p className="text-sm text-gray-600 dark:text-gray-400">Humidity</p>
-                  <p className="text-xl font-semibold">{weather_japan.humidity}%</p>
+                  <p className="text-xl font-semibold">{weatherJapan.humidity}%</p>
                 </div>
               </div>
               <div className="mt-3 p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
-                <p className="text-sm font-medium text-purple-800 dark:text-purple-200">{weather_japan.condition}</p>
+                <p className="text-sm font-medium text-purple-800 dark:text-purple-200">{weatherJapan.condition}</p>
               </div>
             </div>
           </BentoCard>
@@ -129,13 +94,13 @@ export default async function Home() {
             <div className="space-y-3">
               <p className="text-sm text-gray-600 dark:text-gray-400">Try this activity:</p>
               <div className="p-4 bg-linear-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-xl border border-purple-200/50">
-                <p className="font-semibold text-lg mb-2">{bored_activity.activity}</p>
+                <p className="font-semibold text-lg mb-2">{boredActivity.activity}</p>
                 <div className="flex gap-2 text-sm">
                   <span className="px-2 py-1 bg-purple-200 dark:bg-purple-700 rounded-full text-purple-800 dark:text-purple-200">
-                    {bored_activity.type != null ? (bored_activity.type).charAt(0).toUpperCase() + bored_activity.type.slice(1) : 'N/A'}
+                    {boredActivity.type != null ? (boredActivity.type).charAt(0).toUpperCase() + boredActivity.type.slice(1) : 'N/A'}
                   </span>
                   <span className="px-2 py-1 bg-green-200 dark:bg-green-700 rounded-full text-green-800 dark:text-green-200">
-                    {bored_activity.price == 0 ? 'Free' : `$${bored_activity.price}`}
+                    {boredActivity.price == 0 ? 'Free' : `$${boredActivity.price}`}
                   </span>
                 </div>
               </div>
@@ -144,23 +109,23 @@ export default async function Home() {
 
           <BentoCard title="Latest Email Status" className="md:col-span-1">
             <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-200/50">
-              <p className="text-sm leading-relaxed">{email_analysis}</p>
+              <p className="text-sm leading-relaxed">{emailAnalysis}</p>
             </div>
           </BentoCard>
 
           <BentoCard title="Verse of the Day" className="md:col-span-1 lg:col-span-2">
             <div className="space-y-3">
               <div className="flex items-center gap-2 text-sm font-semibold text-purple-700 dark:text-purple-300">
-                <span>{verse_of_the_day.reference}</span>
+                <span>{verseOfTheDay.reference}</span>
                 <span className="px-2 py-0.5 bg-purple-100 dark:bg-purple-800 rounded text-xs">
-                  {verse_of_the_day.version}
+                  {verseOfTheDay.version}
                 </span>
               </div>
               <blockquote className="text-lg italic leading-relaxed border-l-4 border-purple-400 pl-4 py-2">
-                &ldquo;{verse_of_the_day.verse}&rdquo;
+                &ldquo;{verseOfTheDay.verse}&rdquo;
               </blockquote>
               <p className="text-xs text-gray-500 dark:text-gray-400 mt-3">
-                {verse_of_the_day.notice}
+                {verseOfTheDay.notice}
               </p>
             </div>
           </BentoCard>

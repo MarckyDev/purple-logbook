@@ -3,7 +3,7 @@ import BentoCard from '@/components/BentoCard';
 async function get_email_analysis(){
     try {
     const response = await fetch(process.env.API_URL_EMAIL_READER as string, {
-      cache: 'no-store' // Ensures fresh data on each request
+      next: {revalidate: 60}
     });
     
     if (!response.ok) {
@@ -22,7 +22,7 @@ async function get_email_analysis(){
 async function get_verse_of_the_day(){
     try {
     const response = await fetch(process.env.API_URL_VOTD as string, {
-      cache: 'no-store' // Ensures fresh data on each request
+      next: {revalidate: 60} // Ensures fresh data on each request
     });
     
     if (!response.ok) {
@@ -60,7 +60,7 @@ async function get_bored_activity(){
 async function get_weather_japan(){
   try {
     const response = await fetch(process.env.API_URL_WEATHER as string, {
-      cache: 'no-store' // Ensures fresh data on each request
+      next: {revalidate: 60} // Ensures fresh data on each request
     });
     
     if (!response.ok) {

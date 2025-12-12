@@ -2,7 +2,7 @@ import BentoCard from '@/components/BentoCard';
 
 async function get_email_analysis(){
     try {
-    const response = await fetch(process.env.API_URL_EMAIL_READER as string, {
+    const response = await fetch(process.env.NEXT_PUBLIC_API_URL_EMAIL_READER as string, {
       next: {revalidate: 60}
     });
     
@@ -21,7 +21,7 @@ async function get_email_analysis(){
 
 async function get_verse_of_the_day(){
     try {
-    const response = await fetch(process.env.API_URL_VOTD as string, {
+    const response = await fetch(process.env.NEXT_PUBLIC_API_URL_VOTD as string, {
       next: {revalidate: 60} // Ensures fresh data on each request
     });
     
@@ -40,7 +40,7 @@ async function get_verse_of_the_day(){
 
 async function get_bored_activity(){
     try {
-    const response = await fetch(process.env.API_URL_BORED as string, {
+    const response = await fetch(process.env.NEXT_PUBLIC_API_URL_BORED as string, {
       next: { revalidate: 300 } // Cache for 5 minutes
     });
     
@@ -59,7 +59,7 @@ async function get_bored_activity(){
 
 async function get_weather_japan(){
   try {
-    const response = await fetch(process.env.API_URL_WEATHER as string, {
+    const response = await fetch(process.env.NEXT_PUBLIC_API_URL_WEATHER as string, {
       next: {revalidate: 60} // Ensures fresh data on each request
     });
     

@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "deploy": "npm build && gh-pages -d dist -b master"
+    "deploy": "npm run build && gh-pages -d out -b gh-pages"
   },
   "dependencies": {
     "next": "16.0.6",

@@ -1,5 +1,5 @@
 @echo off
-cd "C:\Users\Lenovo\OneDrive\Desktop\Programming\Web\My-LogBook\purple-logbook\app\(backend)"
+cd "C:\Users\Lenovo\OneDrive\Desktop\Programming\Web\My-LogBook\purple-logbook\app\api"
 
 call venv\Scripts\activate.bat
 

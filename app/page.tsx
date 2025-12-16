@@ -3,6 +3,27 @@
 import BentoCard from '@/components/BentoCard';
 import { useState, useEffect } from 'react';
 
+type VerseOfTheDay = {
+  verse: string;
+  reference: string;
+  version: string;
+  notice: string;
+};
+
+type BoredActivity = {
+  activity: string;
+  type: string | null;
+  price: number;
+};
+
+type Weather = {
+  weather_main: string;
+  temp_min_celsius: string;
+  temp_max_celsius: string;
+  humidity: string;
+  condition: string;
+};
+
 const fetchEmailAnalysis = async () => {
   try {
     const res = await fetch("https://logbook-api-wine.vercel.app/analyze");
@@ -41,10 +62,10 @@ const fetchWeather = async () => {
 };
 
 export default function Home() {
-  const [emailAnalysis, setEmailAnalysis] = useState('Loading...');
-  const [verseOfTheDay, setVerseOfTheDay] = useState({ verse: 'Loading...', reference: '', version: '', notice: '' });
-  const [boredActivity, setBoredActivity] = useState({ activity: 'Loading...', type: null, price: 0 });
-  const [weatherJapan, setWeatherJapan] = useState({ weather_main: 'Loading...', temp_min_celsius: '', temp_max_celsius: '', humidity: '', condition: 'Loading...' });
+  const [emailAnalysis, setEmailAnalysis] = useState<string>('Loading...');
+  const [verseOfTheDay, setVerseOfTheDay] = useState<VerseOfTheDay>({ verse: 'Loading...', reference: '', version: '', notice: '' });
+  const [boredActivity, setBoredActivity] = useState<BoredActivity>({ activity: 'Loading...', type: null, price: 0 });
+  const [weatherJapan, setWeatherJapan] = useState<Weather>({ weather_main: 'Loading...', temp_min_celsius: '', temp_max_celsius: '', humidity: '', condition: 'Loading...' });
 
   useEffect(() => {
     fetchEmailAnalysis().then(setEmailAnalysis);
@@ -104,7 +125,9 @@ export default function Home() {
                 <p className="font-semibold text-lg mb-2">{boredActivity.activity}</p>
                 <div className="flex gap-2 text-sm">
                   <span className="px-2 py-1 bg-purple-200 dark:bg-purple-700 rounded-full text-purple-800 dark:text-purple-200">
-                    {boredActivity.type ? boredActivity.type.charAt(0).toUpperCase() + boredActivity.type.slice(1) : 'N/A'}
+                    {boredActivity.type 
+                      ? boredActivity.type.charAt(0).toUpperCase() + boredActivity.type.slice(1) 
+                      : 'N/A'}
                   </span>
                   <span className="px-2 py-1 bg-green-200 dark:bg-green-700 rounded-full text-green-800 dark:text-green-200">
                     {boredActivity.price == 0 ? 'Free' : `$${boredActivity.price}`}

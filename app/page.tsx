@@ -5,7 +5,7 @@ import { use } from 'react';
 
 const fetchEmailAnalysis = async () => {
   try {
-    const res = await fetch(process.env.NEXT_PUBLIC_API_URL_EMAIL_READER as string);
+    const res = await fetch("https://logbook-api-wine.vercel.app/analyze");
     const data = await res.json();
     return data.analysis || 'No analysis available';
   } catch {
@@ -15,7 +15,7 @@ const fetchEmailAnalysis = async () => {
 
 const fetchVerseOfTheDay = async () => {
   try {
-    const res = await fetch(process.env.NEXT_PUBLIC_API_URL_VOTD as string);
+    const res = await fetch("https://logbook-api-wine.vercel.app/verse_of_the_day");
     return await res.json();
   } catch {
     return { verse: 'Error loading verse', reference: '', version: '', notice: '' };
@@ -24,7 +24,7 @@ const fetchVerseOfTheDay = async () => {
 
 const fetchBoredActivity = async () => {
   try {
-    const res = await fetch(process.env.NEXT_PUBLIC_API_URL_BORED as string);
+    const res = await fetch("https://logbook-api-wine.vercel.app/bored_activity");
     return await res.json();
   } catch {
     return { activity: 'Error loading activity', type: null, price: 0 };
@@ -33,7 +33,7 @@ const fetchBoredActivity = async () => {
 
 const fetchWeather = async () => {
   try {
-    const res = await fetch(process.env.NEXT_PUBLIC_API_URL_WEATHER as string);
+    const res = await fetch("https://logbook-api-wine.vercel.app/weather_today");
     return await res.json();
   } catch {
     return { weather_main: 'Error', temp_min_celsius: '', temp_max_celsius: '', humidity: '', condition: 'Error loading weather' };

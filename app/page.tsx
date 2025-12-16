@@ -1,7 +1,7 @@
 'use client';
 
 import BentoCard from '@/components/BentoCard';
-import { use } from 'react';
+import { useState, useEffect } from 'react';
 
 const fetchEmailAnalysis = async () => {
   try {
@@ -41,10 +41,17 @@ const fetchWeather = async () => {
 };
 
 export default function Home() {
-  const emailAnalysis = use(fetchEmailAnalysis());
-  const verseOfTheDay = use(fetchVerseOfTheDay());
-  const boredActivity = use(fetchBoredActivity());
-  const weatherJapan = use(fetchWeather());
+  const [emailAnalysis, setEmailAnalysis] = useState('Loading...');
+  const [verseOfTheDay, setVerseOfTheDay] = useState({ verse: 'Loading...', reference: '', version: '', notice: '' });
+  const [boredActivity, setBoredActivity] = useState({ activity: 'Loading...', type: null, price: 0 });
+  const [weatherJapan, setWeatherJapan] = useState({ weather_main: 'Loading...', temp_min_celsius: '', temp_max_celsius: '', humidity: '', condition: 'Loading...' });
+
+  useEffect(() => {
+    fetchEmailAnalysis().then(setEmailAnalysis);
+    fetchVerseOfTheDay().then(setVerseOfTheDay);
+    fetchBoredActivity().then(setBoredActivity);
+    fetchWeather().then(setWeatherJapan);
+  }, []);
 
   return (
     <div className="min-h-screen font-sans">
@@ -97,7 +104,7 @@ export default function Home() {
                 <p className="font-semibold text-lg mb-2">{boredActivity.activity}</p>
                 <div className="flex gap-2 text-sm">
                   <span className="px-2 py-1 bg-purple-200 dark:bg-purple-700 rounded-full text-purple-800 dark:text-purple-200">
-                    {boredActivity.type != null ? (boredActivity.type).charAt(0).toUpperCase() + boredActivity.type.slice(1) : 'N/A'}
+                    {boredActivity.type ? boredActivity.type.charAt(0).toUpperCase() + boredActivity.type.slice(1) : 'N/A'}
                   </span>
                   <span className="px-2 py-1 bg-green-200 dark:bg-green-700 rounded-full text-green-800 dark:text-green-200">
                     {boredActivity.price == 0 ? 'Free' : `$${boredActivity.price}`}
